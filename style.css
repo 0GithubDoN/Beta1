@@ -1,0 +1,561 @@
+@import url('https://fonts.googleapis.com/css2?family=Helvetica&display=swap');
+
+/* General Styles */
+body {
+    font-family: 'Helvetica', sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+    line-height: 1.6;
+}
+
+.logo-container {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 100;
+}
+
+.logo {
+    width: 120px; /* Adjusted logo size */
+    height: auto;
+    display: block;
+    cursor: pointer; /* Added cursor pointer for the logo */
+    transition: transform 0.3s ease; /* Added transition effect */
+}
+
+.logo:hover {
+    transform: scale(1.1); /* Added hover effect */
+}
+
+.container {
+    position: relative;
+    width: 90%;
+    max-width: 1200px;
+    background: #ffffff;
+    padding: 25px;
+    margin: 30px auto;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    text-align: center;
+    transition: transform 0.3s ease;
+    z-index: 1; /* Ensure container is above other elements */
+}
+
+.container:hover {
+    transform: scale(1.02);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 2.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.menu {
+    position: absolute;
+    top: 80px;
+    left: 20px;
+    z-index: 2; /* Ensure menu is above container */
+}
+
+.menu-toggle {
+    background-color: #ffffff;
+    color: #007bff;
+    border: 2px solid #007bff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-weight: 600;
+    margin-right: 10px;
+    z-index: 3; /* Ensure menu button is above container */
+}
+
+.menu-toggle:hover {
+    background-color: #007bff;
+    color: #ffffff;
+}
+
+.menu-content {
+    display: none;
+    position: absolute;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    padding: 10px;
+    transform: translateY(-20px);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    z-index: 4; /* Ensure menu content is above container */
+}
+
+.menu-content.show {
+    display: block;
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.menu-content button {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+    border: none;
+    background-color: #007bff;
+    color: #ffffff;
+    padding: 10px 0;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.menu-content button:hover {
+    background-color: #0056b3;
+}
+
+.top-right-buttons {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 2; /* Ensure top-right buttons are above container */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+th, td {
+    padding: 15px;
+    text-align: center;
+    border: 1px solid #ddd;
+    color: #333;
+    position: relative; /* Position relative for color picker */
+}
+
+th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:hover {
+    background-color: #f2f2f2;
+}
+
+button, .upload-button {
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+    font-weight: 600;
+    margin-right: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+button:hover, .upload-button:hover {
+    background-color: #0056b3;
+}
+
+button:focus, .upload-button:focus {
+    outline: none;
+}
+
+.buttons-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.buttons-container button {
+    margin: 0 10px;
+}
+
+@media print {
+    h1, .menu, .top-right-buttons, button, .upload-button, .no-print, .logo-container {
+        display: none;
+    }
+
+    body, .container {
+        margin: 0;
+        padding: 0;
+        box-shadow: none;
+        border-radius: 0;
+        width: 100%;
+    }
+}
+
+/* Loading Overlay */
+#loadingOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.7);
+    z-index: 9999;
+    display: none;
+}
+
+.loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+}
+
+.loader::before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    border-radius: 50%;
+    border: 5px solid transparent;
+    border-top-color: #007bff;
+    animation: spin 3s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Apple-like Search Box */
+.search-container {
+    position: relative;
+    margin-top: 20px;
+    max-width: 400px;
+    margin: 20px auto;
+}
+
+.search-input {
+    width: calc(100% - 50px);
+    padding: 12px 20px;
+    font-size: 16px;
+    border: 2px solid #007bff;
+    border-radius: 30px;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.search-input:focus {
+    border-color: #0056b3;
+}
+
+.search-icon {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.search-icon:hover {
+    transform: scale(1.1);
+}
+
+/* Color Picker Icon Styles */
+.color-picker-icon {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    background-image: url('../images/color-picker.png'); /* Change to your PNG path */
+    background-size: cover;
+}
+
+/* Color Picker Container Styles */
+.color-picker-container {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    width: 200px;
+    background-color: rgba(255, 255, 255, 0.9); /* Set background color with transparency */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    display: none;
+}
+
+.color-picker-container.active {
+    display: block;
+}
+
+.color-picker {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-right: 5px;
+    border: 2px solid transparent; /* Add transparent border */
+    background-color: rgba(255, 255, 255, 0.5); /* Set background color with transparency */
+    transition: background-color 0.3s ease; /* Add transition effect */
+}
+
+.color-picker:hover {
+    transform: scale(1.2);
+    background-color: rgba(255, 255, 255, 0.8); /* Adjust background color on hover */
+}
+
+/* Example Animation Effects */
+@keyframes slideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@media print {
+    /* Color Picker Icon and Container */
+    .color-picker-icon,
+    .color-picker-container {
+        display: none !important;
+    }
+}
+
+/* Dark Mode Styles */
+body.dark-mode {
+    background-color: #222;
+    color: #fff;
+}
+
+.container.dark-mode {
+    background-color: #333;
+    box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1);
+}
+
+h1.dark-mode {
+    color: #fff;
+    text-shadow: none;
+}
+
+.menu-toggle.dark-mode {
+    background-color: #444;
+    color: #fff;
+    border: 2px solid #fff;
+}
+
+.menu-content.dark-mode {
+    background-color: #444;
+    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
+}
+
+.menu-content.dark-mode button {
+    background-color: #fff;
+    color: #444;
+}
+
+.top-right-buttons.dark-mode button {
+    background-color: #444;
+    color: #fff;
+    border: none;
+}
+
+table.dark-mode {
+    border-color: #555;
+}
+
+th.dark-mode {
+    background-color: #444;
+    color: #fff;
+}
+
+tr.dark-mode {
+    background-color: #555;
+}
+
+tr.dark-mode:hover {
+    background-color: #666;
+}
+
+/* Dark Mode Loading Overlay */
+#loadingOverlay.dark-mode {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+/* Dark Mode Search Box */
+.search-container.dark-mode {
+    border-color: #444;
+}
+
+.search-input.dark-mode {
+    background-color: #333;
+    color: #fff;
+    border-color: #444;
+}
+
+.search-icon.dark-mode {
+    filter: invert(1); /* Invert the search icon color */
+}
+
+/* Dark Mode Color Picker Icon and Container */
+.color-picker-icon.dark-mode {
+    background-image: url('../images/color-picker-dark.png'); /* Change to your dark mode PNG path */
+}
+
+.color-picker-container.dark-mode {
+    background-color: rgba(0, 0, 0, 0.9); /* Set dark mode background color with transparency */
+    border-color: #666;
+}
+
+.color-picker.dark-mode {
+    background-color: rgba(0, 0, 0, 0.5); /* Set dark mode background color with transparency */
+    border-color: #666;
+}
+
+.color-picker.dark-mode:hover {
+    background-color: rgba(0, 0, 0, 0.8); /* Adjust dark mode background color on hover */
+}
+
+/* Modern Switcher Button Styles */
+.switcher {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switcher input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+/* Popup Window Styles */
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    max-height: calc(100vh - 40px);
+    max-width: calc(100vw - 40px);
+    overflow-y: auto;
+}
+
+.popup.active {
+    display: block;
+}
+
+.popup-content {
+    text-align: center;
+}
+
+.popup-content h2 {
+    margin-bottom: 20px;
+}
+
+.popup-content select {
+    padding: 10px;
+    margin-bottom: 20px;
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.popup-content button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-weight: 600;
+}
+
+.popup-content button:hover {
+    background-color: #0056b3;
+}
